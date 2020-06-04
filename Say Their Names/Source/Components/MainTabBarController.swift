@@ -75,7 +75,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         let donationsController = DonationsController(service: self.service, shouldInitWithNib: false)
         let donationsNC = UINavigationController(rootViewController: donationsController)
         
-        let petitionsController = PetitionsController(service: self.service, shouldInitWithNib: false)
+        let petitionsController = PetitionsController(service: self.service)
         let petitionsNC = UINavigationController(rootViewController: petitionsController)
         
         let settingsController = SettingsController(service: self.service) 
@@ -99,8 +99,8 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         settingsNC.tabBarItem.image = #imageLiteral(resourceName: "settings")
         settingsNC.tabBarItem.selectedImage = UIImage(named: "settings_active")
         settingsNC.tabBarItem.title = "Settings"
-        
-        viewControllers = [homeNC, donationsNC, petitionsNC, settingsNC]
+        #warning("move petitionsVC back to 3rd")
+        viewControllers = [petitionsNC, homeNC, donationsNC, settingsNC]
     }
 
     func setupTabBar() {
