@@ -27,7 +27,6 @@ class PetitionCollectionViewCell: UICollectionViewCell {
 
     private lazy var imageViewContainer : UIView = {
         let imageViewContainer = UIView()
-        imageViewContainer.backgroundColor = .purple
         imageViewContainer.clipsToBounds = true
         imageViewContainer.addSubview(imageView)
         return imageViewContainer
@@ -127,6 +126,7 @@ class PetitionCollectionViewCell: UICollectionViewCell {
 
             imageView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor),
             imageView.centerXAnchor.constraint(equalTo: imageViewContainer.centerXAnchor),
+            imageView.widthAnchor.constraint(greaterThanOrEqualTo: imageViewContainer.widthAnchor),
 
             verifiedLabel.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor),
             verifiedLabel.topAnchor.constraint(equalTo: imageViewContainer.bottomAnchor),
