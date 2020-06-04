@@ -8,7 +8,8 @@
 
 import UIKit
 
-class CustomTableView: UIView {
+/// A UIVIew that contains a UICollectionView <#some more examplanation#>, a Custom Navigation Bar, and 2 buttons: search and filter
+class CustomCollectionView: UIView {
 
     let title : String
     let filterButtonTitle : String
@@ -50,11 +51,24 @@ class CustomTableView: UIView {
         return separator
     }()
 
-    let tableView : UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .systemBackground
-        return tableView
+//    let tableView : UITableView = {
+//        let tableView = UITableView(frame: .zero, style: .plain)
+//        tableView.separatorStyle = .none
+//        tableView.backgroundColor = .systemBackground
+//        return tableView
+//    }()
+
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInsetReference = .fromContentInset
+        layout.sectionInset = Self.CollectionViewCellInsets
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout:layout)
+        collectionView.contentInsetAdjustmentBehavior = .always
+        collectionView.backgroundColor = .yellow
+        return collectionView
     }()
 
     override func didMoveToSuperview() {
@@ -75,10 +89,10 @@ class CustomTableView: UIView {
         createCustomNavigationBarLayout()
         addSubview(customNavigationBar)
         
-        addSubview(tableView)
+        addSubview(collectionView)
         
         // all subviews should use custom constraints
-        [customNavigationBar, tableView].forEach {
+        [customNavigationBar, collectionView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -88,10 +102,10 @@ class CustomTableView: UIView {
             customNavigationBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             customNavigationBar.heightAnchor.constraint(equalToConstant: Self.CustomNavigationBarHeight),
                                     
-            tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: customNavigationBar.bottomAnchor),
-            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: customNavigationBar.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 
@@ -139,4 +153,6 @@ class CustomTableView: UIView {
     static let CustomNavBarMargin : CGFloat = 16
     static let CustomNavBarUnderbarWidth : CGFloat = 160
     static let CustomNavBarUnderbarHeight : CGFloat = 1
+    
+    static let CollectionViewCellInsets = UIEdgeInsets(top: 26, left: 26, bottom: 0, right: 26)
 }

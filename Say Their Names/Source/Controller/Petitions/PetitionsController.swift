@@ -12,11 +12,11 @@ import UIKit
 final class PetitionsController: UIViewController, ServiceReferring {
     var service: Service?
     
-    private lazy var petitionsView = CustomTableView(title: Self.PetitionTitle, filterButtonTitle: Self.FilterButtonTitle)
-    var petitionsTableView : UITableView { petitionsView.tableView }
+    private lazy var petitionsView = CustomCollectionView(title: Self.PetitionTitle, filterButtonTitle: Self.FilterButtonTitle)
+    var petitionsCollectionView : UICollectionView { petitionsView.collectionView }
     var searchButton : UIButton { petitionsView.searchButton }
 
-    let dataSource = PetitionsTableViewDataSource()
+    let dataSource = PetitionsCollectionViewDataSource()
     
     required init(service: Service) {
         self.service = service
@@ -34,15 +34,9 @@ final class PetitionsController: UIViewController, ServiceReferring {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        petitionsTableView.dataSource = dataSource
+        dataSource.configure(collectionView: petitionsCollectionView)
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        
-//        view.setNeedsLayout()
-//    }
-
     // MARK:- Constants
     static let PetitionTitle = NSLocalizedString("PETITIONS", comment: "Petitions View Controller Title")
     static let FilterButtonTitle = NSLocalizedString("Filter", comment: "Petitions View Controller Filter Button Title")
