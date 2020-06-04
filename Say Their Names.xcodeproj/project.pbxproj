@@ -497,9 +497,9 @@
 			children = (
 				A91B077D24835CF700DB803C /* PetitionsController.swift */,
 				7C47A9402488715200B8D3BE /* PetitionsCollectionViewDataSource.swift */,
-				9E459C5524873BB000309334 /* PetitionsViewCode.swift */,
 				7C47A9422488775700B8D3BE /* PetitionCollectionViewCell.swift */,
 				7C47A93E2488589A00B8D3BE /* CustomCollectionView.swift */,
+				9E459C5524873BB000309334 /* PetitionsViewCode.swift */,
 			);
 			path = Petitions;
 			sourceTree = "<group>";

@@ -10,9 +10,19 @@ import UIKit
 
 final class PetitionsCollectionViewDataSource : NSObject {
     
+    private(set) var petitions : [PetitionViewModel] = []
+    private(set) var collectionView : UICollectionView?
+    
+    func set(petitions:[PetitionViewModel]) {
+        self.petitions = petitions
+        collectionView?.reloadData()
+    }
+    
     func configure(collectionView:UICollectionView) {
-        collectionView.register(PetitionCollectionViewCell.self, forCellWithReuseIdentifier: PetitionCollectionViewCell.PetitionCellIdentifier)
+        collectionView.register(cellType: PetitionCollectionViewCell.self)
         collectionView.dataSource = self
+        
+        self.collectionView = collectionView
     }
 }
 
@@ -20,35 +30,15 @@ final class PetitionsCollectionViewDataSource : NSObject {
 extension PetitionsCollectionViewDataSource : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(#function)
-        return 5
+        return petitions.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
          
-        print(#function)
-        print("indexPath.row:\(indexPath.item)")
-        
-//        let location = locations[indexPath.item]
-        
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PetitionCollectionViewCell.PetitionCellIdentifier, for: indexPath) as? PetitionCollectionViewCell {
-//            cell.configure(with: location)
-//            locationCell.accessibilityIdentifier = "locationCell\(indexPath.item)"
-//            locationCell.isAccessibilityElement = true
-            return cell
-        }
-        
-        return UICollectionViewCell()
+        let cell : PetitionCollectionViewCell = collectionView.dequeueCell(for: indexPath)
+        cell.configure(with:petitions[indexPath.item])
+        return cell
     }
 
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        5
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: PetitionTableViewCell.PetitionIdentifier, for: indexPath)
-////        cell.textLabel?.text = "Hello"
-//        return cell
-//    }
 }
 

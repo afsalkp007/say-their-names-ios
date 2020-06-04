@@ -12,12 +12,11 @@ import UIKit
 class CustomCollectionView: UIView {
 
     let title : String
-    let filterButtonTitle : String
+//    let filterButtonTitle : String
     
-    init(title: String, filterButtonTitle: String)
+    init(title: String)
     {
         self.title = title
-        self.filterButtonTitle = filterButtonTitle
         super.init(frame: .zero)
     }
     
@@ -26,30 +25,30 @@ class CustomCollectionView: UIView {
     let customNavigationBar: UIView = {
         let customNavigationBar = UIView()
         customNavigationBar.tintColor = .label
-        customNavigationBar.backgroundColor = .systemBackground
+        customNavigationBar.backgroundColor = .black
         return customNavigationBar
     }()
     
-    let searchButton: UIButton = {
-        let searchButton = UIButton(type: .custom)
-        let searchImage = UIImage(named: "Simple Search Icon")?.withRenderingMode(.alwaysTemplate)
-        searchButton.setImage(searchImage, for: .normal)
-        return searchButton
-    }()
+//    let searchButton: UIButton = {
+//        let searchButton = UIButton(type: .custom)
+//        let searchImage = UIImage(named: "Simple Search Icon")?.withRenderingMode(.alwaysTemplate)
+//        searchButton.setImage(searchImage, for: .normal)
+//        return searchButton
+//    }()
+//
+//    lazy var filterButton: UIButton = {
+//        let filterButton = UIButton(type: .custom)
+//        filterButton.setTitle(filterButtonTitle, for: .normal)
+//        filterButton.setTitleColor(.label, for: .normal)
+//        filterButton.titleLabel?.font = UIFont.STN.filledButtonTitle
+//        return filterButton
+//    }()
 
-    lazy var filterButton: UIButton = {
-        let filterButton = UIButton(type: .custom)
-        filterButton.setTitle(filterButtonTitle, for: .normal)
-        filterButton.setTitleColor(.label, for: .normal)
-        filterButton.titleLabel?.font = UIFont.STN.filledButtonTitle
-        return filterButton
-    }()
-
-    let separator: UIView! = {
-        let separator = UIView()
-        separator.backgroundColor = .systemGray4
-        return separator
-    }()
+//    let separator: UIView! = {
+//        let separator = UIView()
+//        separator.backgroundColor = .systemGray4
+//        return separator
+//    }()
 
 //    let tableView : UITableView = {
 //        let tableView = UITableView(frame: .zero, style: .plain)
@@ -60,23 +59,32 @@ class CustomCollectionView: UIView {
 
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.sectionInsetReference = .fromContentInset
+//        layout.scrollDirection = .vertical
+//        layout.sectionInsetReference = .fromContentInset
         layout.sectionInset = Self.CollectionViewCellInsets
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+//        layout.itemSize = UICollectionViewFlowLayout.automaticSize
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize //CGSize(width: 4, height: 4) //UICollectionViewFlowLayout.automaticSize
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout:layout)
         collectionView.contentInsetAdjustmentBehavior = .always
-        collectionView.backgroundColor = .yellow
+        collectionView.backgroundColor = .systemBackground
         return collectionView
     }()
 
+    var maxCellWidth : CGFloat {
+        collectionView.bounds.width -
+            collectionView.safeAreaInsets.left -
+            collectionView.safeAreaInsets.right -
+            Self.CollectionViewCellInsets.left -
+            Self.CollectionViewCellInsets.right
+    }
+    
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         
         createLayout()
         
-        backgroundColor = .systemBackground
+        backgroundColor = .black
     }
 
     private var hasLayedOutSubviews = false
@@ -114,12 +122,13 @@ class CustomCollectionView: UIView {
         let label = UILabel()
         label.text = title
         label.font = UIFont.STN.navBarTitle
+        label.textColor = .white
                 
         let navbarsubviews : [UIView] = [
             label,
-            searchButton,
-            filterButton,
-            separator
+//            searchButton,
+//            filterButton,
+//            separator
         ]
         
         navbarsubviews.forEach {
@@ -131,19 +140,19 @@ class CustomCollectionView: UIView {
             label.centerXAnchor.constraint(equalTo: customNavigationBar.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: customNavigationBar.centerYAnchor),
             
-            filterButton.leadingAnchor.constraint(equalTo: customNavigationBar.leadingAnchor, constant: Self.CustomNavBarMargin),
-            filterButton.centerYAnchor.constraint(equalTo: customNavigationBar.centerYAnchor),
-            filterButton.heightAnchor.constraint(equalToConstant: Self.SearchButtonSize),
-            
-            searchButton.widthAnchor.constraint(equalToConstant: Self.SearchButtonSize),
-            searchButton.heightAnchor.constraint(equalToConstant: Self.SearchButtonSize),
-            searchButton.trailingAnchor.constraint(equalTo: customNavigationBar.trailingAnchor, constant: -Self.CustomNavBarMargin),
-            searchButton.centerYAnchor.constraint(equalTo: customNavigationBar.centerYAnchor),
-            
-            separator.widthAnchor.constraint(equalToConstant: Self.CustomNavBarUnderbarWidth),
-            separator.heightAnchor.constraint(equalToConstant: Self.CustomNavBarUnderbarHeight),
-            separator.centerXAnchor.constraint(equalTo: customNavigationBar.centerXAnchor),
-            separator.bottomAnchor.constraint(equalTo: customNavigationBar.bottomAnchor)
+//            filterButton.leadingAnchor.constraint(equalTo: customNavigationBar.leadingAnchor, constant: Self.CustomNavBarMargin),
+//            filterButton.centerYAnchor.constraint(equalTo: customNavigationBar.centerYAnchor),
+//            filterButton.heightAnchor.constraint(equalToConstant: Self.SearchButtonSize),
+//
+//            searchButton.widthAnchor.constraint(equalToConstant: Self.SearchButtonSize),
+//            searchButton.heightAnchor.constraint(equalToConstant: Self.SearchButtonSize),
+//            searchButton.trailingAnchor.constraint(equalTo: customNavigationBar.trailingAnchor, constant: -Self.CustomNavBarMargin),
+//            searchButton.centerYAnchor.constraint(equalTo: customNavigationBar.centerYAnchor),
+//
+//            separator.widthAnchor.constraint(equalToConstant: Self.CustomNavBarUnderbarWidth),
+//            separator.heightAnchor.constraint(equalToConstant: Self.CustomNavBarUnderbarHeight),
+//            separator.centerXAnchor.constraint(equalTo: customNavigationBar.centerXAnchor),
+//            separator.bottomAnchor.constraint(equalTo: customNavigationBar.bottomAnchor)
         ])
     }
 
