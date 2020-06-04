@@ -29,6 +29,7 @@ class PetitionCollectionViewCell: UICollectionViewCell {
         let imageViewContainer = UIView()
         imageViewContainer.clipsToBounds = true
         imageViewContainer.addSubview(imageView)
+        imageViewContainer.backgroundColor = .systemGray5
         return imageViewContainer
     }()
     
@@ -45,8 +46,8 @@ class PetitionCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.STN.bannerTitle
         label.textColor = .black
-        label.numberOfLines = 2
-        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 1
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
 
@@ -103,8 +104,9 @@ class PetitionCollectionViewCell: UICollectionViewCell {
                 $0.translatesAutoresizingMaskIntoConstraints = false
             }
             
+            imageViewContainer.addSubview(verifiedLabel)
+            
             [imageViewContainer,
-             verifiedLabel,
              titleLabel,
              summaryLabel,
              findOutMoreButton].forEach {
@@ -122,14 +124,14 @@ class PetitionCollectionViewCell: UICollectionViewCell {
             imageViewContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageViewContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageViewContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageViewContainer.heightAnchor.constraint(equalToConstant: imageView.image == nil ? 0 : Self.PetitionImageHeight),
+            imageViewContainer.heightAnchor.constraint(equalToConstant: Self.PetitionImageHeight),
 
             imageView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor),
             imageView.centerXAnchor.constraint(equalTo: imageViewContainer.centerXAnchor),
             imageView.widthAnchor.constraint(greaterThanOrEqualTo: imageViewContainer.widthAnchor),
 
-            verifiedLabel.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor),
-            verifiedLabel.topAnchor.constraint(equalTo: imageViewContainer.bottomAnchor),
+            verifiedLabel.trailingAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -Self.VerifiedTextMargin),
+            verifiedLabel.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: Self.VerifiedTextMargin),
 
             titleLabel.topAnchor.constraint(equalTo: imageViewContainer.bottomAnchor, constant: Self.TitleTopMargin),
             titleLabel.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: Self.TextHorizontalMargin),
@@ -142,9 +144,8 @@ class PetitionCollectionViewCell: UICollectionViewCell {
             findOutMoreButton.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             findOutMoreButton.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             findOutMoreButton.heightAnchor.constraint(equalToConstant: Self.FindOutMoreButtonHeight),
-            findOutMoreButton.topAnchor.constraint(equalTo: summaryLabel.bottomAnchor, constant: Self.SummaryTopMargin),
             
-//            findOutMoreButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+            findOutMoreButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Self.FindOutMoreButtonBottomMarging)
         ]
         
         NSLayoutConstraint.activate(allConstriants)
@@ -168,7 +169,6 @@ class PetitionCollectionViewCell: UICollectionViewCell {
         titleLabel.text = petition.title
         summaryLabel.text = petition.summary
         
-
         setNeedsUpdateConstraints()
     }
 
@@ -184,6 +184,7 @@ class PetitionCollectionViewCell: UICollectionViewCell {
     static let ImageTopMargin : CGFloat = 19
     static let ImageContentMargin : CGFloat = 20
     static let FindOutMoreButtonHeight : CGFloat = 50
+    static let FindOutMoreButtonBottomMarging : CGFloat = 15
 }
 
 

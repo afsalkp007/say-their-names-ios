@@ -69,7 +69,7 @@ extension PetitionsController : UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
                 
-        return CGSize(width: petitionsView.maxCellWidth, height: 312)
+        return CGSize(width: petitionsView.maxCellWidth, height: 315)
     }
 }
 
